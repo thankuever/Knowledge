@@ -1,0 +1,20 @@
+2020/11/26
+
+如果要建立一個新增訂單的功能，要如何設計呢？
+目前有 Customer，Product，Order，OrderItem，Store等類別
+1.Customer
+Customer.ApplyOrder(List<OrderItem> items)
+
+2.Order
+Order.Add(int customerId, List<OrderItem> items);
+
+3.Store
+Store.AddOrder(Customer customer, List<OrderItem> items);
+Store.AddOrder(int customerId, List<OrderItem> items);
+
+這樣看起來：
+方法3 的缺點是，Store 要收集客人及訂單資訊，都不是在處理商店本身資訊，不太需要管這麼寬
+方法1 的缺點是，Customer要接收訂單資訊，又要將它記錄，且完全不是客戶相關的事務，不太需要管這麼寬
+方法2 ，Order自己處理訂單，看起來恰當
+
+最好是類別能處理自己負責的資訊，而不是將類別A的資訊傳給類別B，請後者去處理
